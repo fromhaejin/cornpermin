@@ -1,5 +1,7 @@
 const canvas = document.getElementById('gameCanvas');
 const ctx = canvas.getContext('2d');
+const scoreElement = document.getElementById('score');
+const timerElement = document.getElementById('timer');
 
 canvas.width = window.innerWidth;
 canvas.height = window.innerHeight;
@@ -42,8 +44,6 @@ const player = {
 };
 
 let moveDirection = null;
-
-const scoreElement = document.getElementById('score');
 
 function createObstacle() {
     const x = Math.random() * (canvas.width - obstacleWidth);
@@ -105,6 +105,12 @@ function checkGameOver() {
     }
 }
 
+function updateTimer() {
+    const elapsedTime = Date.now() - gameStartTime;
+    const remainingTime = Math.max((gameDuration - elapsedTime) / 1000, 0).toFixed(1); // 남은 시간을 초 단위로 계산
+    timerElement.textContent = `시간: ${remainingTime}s`;
+}
+
 function gameLoop() {
     if (gameOver) {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -123,8 +129,8 @@ function gameLoop() {
     updateObstacles();
     detectCollision();
     checkGameOver();
+    updateTimer(); // 타이머 업데이트
 
-    // 플레이어 이동 처리
     if (moveDirection === 'left' && player.x > 0) {
         player.x -= playerSpeed;
     } else if (moveDirection === 'right' && player.x < canvas.width - player.width) {
