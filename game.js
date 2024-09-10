@@ -49,6 +49,11 @@ images.forEach(image => {
     };
 });
 
+// contextmenu 이벤트를 취소하여 공유하기 메뉴 방지
+document.addEventListener('contextmenu', (event) => {
+    event.preventDefault();
+});
+
 const player = {
     x: canvas.width / 2 - playerWidth / 2,
     y: canvas.height - playerHeight - 10,
@@ -138,7 +143,6 @@ function drawDebug() {
     });
 }
 
-
 function gameLoop() {
     if (gameOver) {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -164,7 +168,9 @@ function gameLoop() {
     checkGameOver();
     updateTimer(); // 타이머 업데이트
 
-
+    // if (debugMode) {
+    //     drawDebug(); // 디버깅 모드일 때만 경계 표시
+    // }
 
     if (moveDirection === 'left' && player.x > 0) {
         player.x -= playerSpeed;
