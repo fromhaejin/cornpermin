@@ -157,6 +157,15 @@ function gameLoop() {
     checkGameOver();
     updateTimer(); // 타이머 업데이트
 
+    drawDebug();
+    function drawDebug() {
+    ctx.strokeStyle = 'red';
+    ctx.strokeRect(player.x, player.y, playerWidth, playerHeight); // 플레이어 경계
+
+    obstacles.forEach(obstacle => {
+        ctx.strokeRect(obstacle.x, obstacle.y, obstacleWidth, obstacleHeight); // 장애물 경계
+    });
+}
     if (moveDirection === 'left' && player.x > 0) {
         player.x -= playerSpeed;
     } else if (moveDirection === 'right' && player.x < canvas.width - player.width) {
