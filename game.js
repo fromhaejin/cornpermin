@@ -123,10 +123,10 @@ function gameLoop() {
         ctx.drawImage(gameOverImage, 0, 0, canvas.width, canvas.height);
 
         ctx.fillStyle = '#000';
-        ctx.font = `${canvas.width * 0.05}px Arial`;
+        ctx.font = `bold ${canvas.width * 0.05}px Arial`; // 글꼴 두께 볼드체
 
         // 최종 점수를 화면 아래쪽으로 더 내리기
-        const scoreYPosition = canvas.height / 2 + canvas.height * 0.15; // y 좌표를 더 밑으로 조정
+        const scoreYPosition = canvas.height / 2 + canvas.height * 0.18; // y 좌표를 더 밑으로 조정
         ctx.fillText(`최종 점수: ${score}`, canvas.width / 2 - canvas.width * 0.2, scoreYPosition);
         
         return;
