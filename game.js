@@ -36,6 +36,10 @@ gameOverObstacleImage.src = 'images/obstacle.png';
 const scoreObstacleImage = new Image();
 scoreObstacleImage.src = 'images/scoreObstacle.png';
 
+// 게임오버 이미지 불러오기
+const gameOverImage = new Image();
+gameOverImage.src = 'images/gameover.jpg'; // 게임오버 이미지 경로 설정
+
 const player = {
     x: canvas.width / 2 - playerWidth / 2,
     y: canvas.height - playerHeight - 10,
@@ -114,9 +118,11 @@ function updateTimer() {
 function gameLoop() {
     if (gameOver) {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+        // 게임오버 이미지 출력
+        ctx.drawImage(gameOverImage, 0, 0, canvas.width, canvas.height);
+
         ctx.fillStyle = '#000';
-        ctx.font = `${canvas.width * 0.1}px Arial`;
-        ctx.fillText('Game Over', canvas.width / 2 - canvas.width * 0.3, canvas.height / 2 - canvas.height * 0.15);
         ctx.font = `${canvas.width * 0.05}px Arial`;
         ctx.fillText(`최종 점수: ${score}`, canvas.width / 2 - canvas.width * 0.2, canvas.height / 2 + canvas.height * 0.05);
         return;
