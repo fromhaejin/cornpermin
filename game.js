@@ -78,12 +78,28 @@ function updateObstacles() {
 
 function detectCollision() {
     obstacles.forEach(obstacle => {
+    // 충돌 감지 범위를 줄이기 위해 일정 값 빼기
+        const reducedPlayerWidth = playerWidth * 0.8;
+        const reducedPlayerHeight = playerHeight * 0.8;
+        const reducedObstacleWidth = obstacleWidth * 0.8;
+        const reducedObstacleHeight = obstacleHeight * 0.8;
+
         if (
-            player.x < obstacle.x + obstacleWidth &&
-            player.x + playerWidth > obstacle.x &&
-            player.y < obstacle.y + obstacleHeight &&
-            player.y + playerHeight > obstacle.y
+            player.x < obstacle.x + reducedObstacleWidth &&
+            player.x + reducedPlayerWidth > obstacle.x &&
+            player.y < obstacle.y + reducedObstacleHeight &&
+            player.y + reducedPlayerHeight > obstacle.y
         ) {
+            if (obstacle.type === 0) {
+                updateScore();
+            } else {
+                gameOver = true;
+            }
+            obstacles = obstacles.filter(o => o !== obstacle);
+        }
+    });
+}
+        {
             if (obstacle.type === 0) {
                 updateScore();
             } else {
