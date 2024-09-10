@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>옥수수 피하기 게임</title>
+    <title>분당옥수수 게임</title>
     <style>
         body {
             margin: 0;
@@ -26,19 +26,16 @@
         #timer {
             position: absolute;
             top: 10px;
-            right: 10px; /* 오른쪽 상단에 위치하도록 설정 */
+            right: 10px;
             font-size: 24px;
             color: #000;
         }
-        /* 모든 요소에 적용 */
         * {
             user-select: none;
             -webkit-user-select: none; /* Safari */
             -moz-user-select: none; /* Firefox */
             -ms-user-select: none; /* Internet Explorer/Edge */
         }
-
-        /* 특정 요소에만 적용 */
         .no-select {
             user-select: none;
             -webkit-user-select: none; /* Safari */
@@ -52,11 +49,5 @@
     <div id="timer" class="no-select">시간: 30.0s</div>
     <canvas id="gameCanvas"></canvas>
     <script src="game.js"></script>
-    <script>
-        // 전체 문서에서 컨텍스트 메뉴 비활성화
-        document.addEventListener('contextmenu', function(event) {
-            event.preventDefault(); // 기본 컨텍스트 메뉴 동작 방지
-        });
-    </script>
 </body>
 </html>
