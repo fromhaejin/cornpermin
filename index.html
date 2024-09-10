@@ -52,5 +52,11 @@
     <div id="timer" class="no-select">시간: 30.0s</div>
     <canvas id="gameCanvas"></canvas>
     <script src="game.js"></script>
+    <script>
+        // 전체 문서에서 컨텍스트 메뉴 비활성화
+        document.addEventListener('contextmenu', function(event) {
+            event.preventDefault(); // 기본 컨텍스트 메뉴 동작 방지
+        });
+    </script>
 </body>
 </html>
