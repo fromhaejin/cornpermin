@@ -25,20 +25,29 @@ let playerSpeed = initialPlayerSpeed;
 let gameStartTime = Date.now();
 
 const backgroundImage = new Image();
-backgroundImage.src = 'images/background.png';
-
 const playerImage = new Image();
-playerImage.src = 'images/player.png';
-
 const gameOverObstacleImage = new Image();
-gameOverObstacleImage.src = 'images/obstacle.png';
-
 const scoreObstacleImage = new Image();
-scoreObstacleImage.src = 'images/scoreObstacle.png';
-
-// 게임오버 이미지 불러오기
 const gameOverImage = new Image();
-gameOverImage.src = 'images/gameover.png'; // 게임오버 이미지 경로 설정
+
+backgroundImage.src = 'images/background.png';
+playerImage.src = 'images/player.png';
+gameOverObstacleImage.src = 'images/obstacle.png';
+scoreObstacleImage.src = 'images/scoreObstacle.png';
+gameOverImage.src = 'images/gameover.png';
+
+// 모든 이미지 로딩이 완료된 후 게임 루프를 시작
+const images = [backgroundImage, playerImage, gameOverObstacleImage, scoreObstacleImage, gameOverImage];
+let imagesLoaded = 0;
+
+images.forEach(image => {
+    image.onload = () => {
+        imagesLoaded++;
+        if (imagesLoaded === images.length) {
+            gameLoop();
+        }
+    };
+});
 
 const player = {
     x: canvas.width / 2 - playerWidth / 2,
@@ -78,7 +87,6 @@ function updateObstacles() {
 
 function detectCollision() {
     obstacles.forEach(obstacle => {
-    // 충돌 감지 범위를 줄이기 위해 일정 값 빼기
         const reducedPlayerWidth = playerWidth * 0.8;
         const reducedPlayerHeight = playerHeight * 0.8;
         const reducedObstacleWidth = obstacleWidth * 0.8;
@@ -90,16 +98,6 @@ function detectCollision() {
             player.y < obstacle.y + reducedObstacleHeight &&
             player.y + reducedPlayerHeight > obstacle.y
         ) {
-            if (obstacle.type === 0) {
-                updateScore();
-            } else {
-                gameOver = true;
-            }
-            obstacles = obstacles.filter(o => o !== obstacle);
-        }
-    });
-}
-        {
             if (obstacle.type === 0) {
                 updateScore();
             } else {
@@ -127,8 +125,17 @@ function checkGameOver() {
 
 function updateTimer() {
     const elapsedTime = Date.now() - gameStartTime;
-    const remainingTime = Math.max((gameDuration - elapsedTime) / 1000, 0).toFixed(1); // 남은 시간을 초 단위로 계산
+    const remainingTime = Math.max((gameDuration - elapsedTime) / 1000, 0).toFixed(1);
     timerElement.textContent = `시간: ${remainingTime}s`;
+}
+
+function drawDebug() {
+    ctx.strokeStyle = 'red';
+    ctx.strokeRect(player.x, player.y, playerWidth, playerHeight); // 플레이어 경계
+
+    obstacles.forEach(obstacle => {
+        ctx.strokeRect(obstacle.x, obstacle.y, obstacleWidth, obstacleHeight); // 장애물 경계
+    });
 }
 
 function gameLoop() {
@@ -139,10 +146,9 @@ function gameLoop() {
         ctx.drawImage(gameOverImage, 0, 0, canvas.width, canvas.height);
 
         ctx.fillStyle = '#000';
-        ctx.font = `bold ${canvas.width * 0.05}px Arial`; // 글꼴 두께 볼드체
+        ctx.font = `bold ${canvas.width * 0.05}px Arial`;
 
-        // 최종 점수를 화면 아래쪽으로 더 내리기
-        const scoreYPosition = canvas.height / 2 + canvas.height * 0.18; // y 좌표를 더 밑으로 조정
+        const scoreYPosition = canvas.height / 2 + canvas.height * 0.18;
         ctx.fillText(`최종 점수: ${score}`, canvas.width / 2 - canvas.width * 0.2, scoreYPosition);
         
         return;
@@ -158,14 +164,7 @@ function gameLoop() {
     updateTimer(); // 타이머 업데이트
 
     drawDebug();
-    function drawDebug() {
-    ctx.strokeStyle = 'red';
-    ctx.strokeRect(player.x, player.y, playerWidth, playerHeight); // 플레이어 경계
 
-    obstacles.forEach(obstacle => {
-        ctx.strokeRect(obstacle.x, obstacle.y, obstacleWidth, obstacleHeight); // 장애물 경계
-    });
-}
     if (moveDirection === 'left' && player.x > 0) {
         player.x -= playerSpeed;
     } else if (moveDirection === 'right' && player.x < canvas.width - player.width) {
@@ -204,4 +203,3 @@ function handleTouchMove(event) {
 
 setInterval(createObstacle, obstacleInterval);
 setInterval(increaseObstacleSpeed, speedIncreaseInterval);
-gameLoop();
