@@ -38,7 +38,7 @@ scoreObstacleImage.src = 'images/scoreObstacle.png';
 
 // 게임오버 이미지 불러오기
 const gameOverImage = new Image();
-gameOverImage.src = 'images/gameover.jpg'; // 게임오버 이미지 경로 설정
+gameOverImage.src = 'images/gameover.png'; // 게임오버 이미지 경로 설정
 
 const player = {
     x: canvas.width / 2 - playerWidth / 2,
