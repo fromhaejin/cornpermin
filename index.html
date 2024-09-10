@@ -10,7 +10,7 @@
             overflow: hidden;
             background: #87CEEB;
             touch-action: none; /* 터치 동작 비활성화 */
-            -webkit-touch-callout: none; /* 길게 누르면 나오는 메뉴 비활성화 */
+            -webkit-touch-callout: none; /* 길게 눌렀을 때 나오는 메뉴 비활성화 */
         }
         canvas {
             display: block;
@@ -50,6 +50,18 @@
     <div id="score" class="no-select">점수: 0</div>
     <div id="timer" class="no-select">시간: 30.0s</div>
     <canvas id="gameCanvas"></canvas>
+
+    <script>
+        // 기본 터치 동작 방지
+        document.body.addEventListener('touchstart', function(e) {
+            e.preventDefault();
+        }, { passive: false });
+
+        document.body.addEventListener('contextmenu', function(e) {
+            e.preventDefault(); // 길게 눌렀을 때 메뉴 방지
+        });
+    </script>
+
     <script src="game.js"></script>
 </body>
 </html>
