@@ -164,9 +164,7 @@ function gameLoop() {
     checkGameOver();
     updateTimer(); // 타이머 업데이트
 
-   // if (debugMode) {
-       // drawDebug(); // 디버깅 모드일 때만 경계 표시
-    }
+
 
     if (moveDirection === 'left' && player.x > 0) {
         player.x -= playerSpeed;
