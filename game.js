@@ -138,6 +138,8 @@ function drawDebug() {
     });
 }
 
+let debugMode = true; // 디버깅 활성화
+
 function gameLoop() {
     if (gameOver) {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -163,7 +165,9 @@ function gameLoop() {
     checkGameOver();
     updateTimer(); // 타이머 업데이트
 
-    drawDebug();
+    if (debugMode) {
+        drawDebug(); // 디버깅 모드일 때만 경계 표시
+    }
 
     if (moveDirection === 'left' && player.x > 0) {
         player.x -= playerSpeed;
